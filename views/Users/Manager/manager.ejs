@@ -1,0 +1,70 @@
+    <nav id="topNav" class="navbar bg-secondary">
+    <a href="/users/logout" class="btn btn-outline-warning ml-auto">Logout</a>
+</nav>
+
+<h3>Welcome <%= user.ename%></h3>
+<br>
+<br>
+<br>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-searcher/0.3.0/jquery.searcher.min.js"></script>
+<script>
+    $(document).ready(function(){
+    //  $("#bid2").click(function(){
+         $.get("http://localhost:5000/users/getdetails",function(data,status){
+         // console.log(JSON.parse(data));
+         // var data=JSON.parse(data);
+         console.log(data);
+          data.forEach(function(dt){
+
+              if(dt){
+                var total=parseInt(dt.Web_Marks)+parseInt(dt.Unix_Marks)+parseInt(dt.Sql_Marks)+parseInt(dt.Java_Marks);
+              $("tbody").append("<tr>"+
+                "<td>"+dt.Name+"</td>"+
+                "<td>"+dt.Empid +"</td>"+
+                "<td>"+dt.Batch_No +"</td>"+
+                "<td>"+dt.Sql_Marks +"</td>"+
+                "<td>"+dt.Unix_Marks +"</td>"+
+                "<td>"+dt.Java_Marks +"</td>"+
+                "<td>"+dt.Web_Marks +"</td>"+
+                "<td>"+total +"</td>"+
+
+                +"</tr>"
+                );
+
+              }
+             
+          });
+             $('#myTable').DataTable();
+         });
+         
+    // });
+
+    });
+</script>
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+ <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+        <!-- <button class="ajax1" id="bid2">Get</button> -->
+        <table id="myTable" class="table table-bordered display">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Empid</th>
+                    <th>Batch_No</th>
+                    <th>Sql_Marks</th>
+                    <th>Unix_Marks</th>
+                    <th>Java_Marks</th>
+                    <th>Web_Marks</th>
+                    <th>Total_Marks</th>
+                 
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>

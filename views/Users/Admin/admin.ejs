@@ -1,0 +1,199 @@
+
+<link rel="stylesheet" href="/stylesheets/Admin.css">
+<script>
+    $(document).ready(function () {
+        var url="<%if(typeof emp != 'undefined'){%>/users/register/<%=emp.empid%>?_method=PUT<%}else{%>/users/register%><%}%>";
+        $('#reg').attr('action',url);
+        $('#view').removeClass('active');
+        $('#create').addClass('active');
+        var str="<%if(typeof emp!= 'undefined'){%><%= typeof emp.dob != 'undefined' ? emp.dob : '' %><%}%>";
+        if(str!=''){
+        str=str.split('-');
+        $("#edob").val(str[0]+'-'+str[1]+'-'+str[2]);
+        }
+        var vl="<%if(typeof emp!= 'undefined'){%><%= typeof emp.role != 'undefined' ? emp.role : '' %><%}else{%>trainee%><%}%>";
+        $('input:radio[name="role"]').filter('[value='+vl+']').attr('checked', true);
+            });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script>
+    $(document).ready(function() {
+
+     $("#reg").validate({
+      rules: {
+     
+         empid: {
+        required: true,
+        minlength: 4,
+        digits:true,
+        maxlength:4  
+       },
+
+       ename: {
+        required: true,
+       
+    
+       },
+
+       dob: {
+        required: true,
+       
+       
+       },
+
+       email: {
+ required: true,
+ 
+},
+
+
+       password: {
+        required: true,
+        minlength: 3,
+        digits:true,
+        maxlength: 7 
+       },
+       mobileno: {
+        required: true,
+        minlength: 10,
+        digits:true,
+        maxlength: 10 
+       },
+       batchno: {
+        required: true,
+        minlength: 2,
+        digits:true,
+        maxlength:2  
+       },
+     
+     },
+     messages: {
+         empid: {
+       number: 'Accept only number',
+       minlength: " please enter Atleast 4 digits",
+       maxlength:" dont enter more than  4 digits"
+      },
+         ename: 'enter valid ename',
+         dob:'enter valid date of birth',
+         email: "Please enter a valid email address",
+      password: {
+       number: 'Accept only number',
+       minlength: " please enter Atleast 3 digits",
+       maxlength:" dont enter more than  7 digits"
+      },
+     
+       
+     
+      mobileno: {
+       number: 'Accept only number',
+       minlength: " please enter Atleast  10 digits",
+       maxlength:" dont enter more than  10 digits"
+      },
+      batchno: {
+       number: 'Accept only number',
+       minlength: " please enter Atleast 2 digits",
+       maxlength:" dont enter more than  2 digits"
+      },
+     
+     
+     
+     },
+    
+    });
+    });
+
+
+ </script>
+<% include ../../Partials/adminNav %>
+<% include ../../Partials/adminSide %>
+    
+
+<!-- Page Content  -->
+
+<div id="content" class="active">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        
+    </nav>
+    <% include ../../Messages/messages %>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form id="reg" action="" method="post">
+                                <div class="form-group">
+                                    <div class="cols-sm-10">
+                                    <label for="eid" class="cols-sm-2 control-label">Employee ID</label>
+                                    <div class="input-group">
+                                            <input type="number" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.empid != 'undefined' ? emp.empid : '' %><%}%>" class="form-control" name="empid" id="eid" placeholder="Enter Employee id" required/>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="enm" class="cols-sm-2 control-label">Employee Name</label>
+                                    <div class="cols-sm-10">
+                                    <div class="input-group">
+                                            <input type="text" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.ename != 'undefined' ? emp.ename : '' %><%}%>" class="form-control" name="ename" id="enm" placeholder="Enter Name" required/>
+                                    </div>
+                                    </div>
+                                </div>
+                      
+                        <div class="form-group">
+                            <label for="eemail" class="cols-sm-2 control-label">Employee email</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <input type="email" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.email != 'undefined' ? emp.email : '' %><%}%>" class="form-control" name="email" id="eemail" placeholder="Enter Email" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="epassword" class="cols-sm-2 control-label">Employee Password</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                        <input type="password" class="form-control" name="password" id="epassword" placeholder="Enter Password" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label for="erole" class="cols-sm-2 control-label">Employee role</label>
+                                <div class="cols-sm-10">
+                                    <div id="erole" class="input-group">
+                                        <div class="custom-control custom-radio">
+                                            <label><input type="radio" name="role" value="trainee">Trainee</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <label><input type="radio" name="role" value="co-ordinator">Co-ordinator</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <label><input type="radio" name="role" value="manager">Manager</label>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eaddress" class="cols-sm-2 control-label">Employee Address</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                        <textarea  class="form-control" name="address" id="eaddress" placeholder="Enter Address" required><%if(typeof emp!= 'undefined'){%><%= typeof emp.address != 'undefined' ? emp.address : '' %><%}%></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="enumber" class="cols-sm-2 control-label">Employee Ph. number</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                        <input type="number" value="<%if(typeof emp!= 'undefined'){%><%= typeof emp.mobileno != 'undefined' ? emp.mobileno : '' %><%}%>" class="form-control" name="mobileno" id="enumber" placeholder="Enter Mobile Number" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <input class='btn btn-primary' type="submit" value="Submit">
+                        </div>                    
+                    </form>
+                </div>
+            </div>
+        </div>                
+    </div>
+</div>   
+</div>
+

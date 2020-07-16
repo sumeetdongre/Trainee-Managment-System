@@ -1,0 +1,159 @@
+<nav id="topNav" class="navbar bg-secondary">
+        <a href="/users/logout" class="btn btn-outline-warning ml-auto">Logout</a>
+</nav>
+
+<h3>Welcome <%= user.ename%></h3>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+       <!-- <script>
+        $(document).ready(function()
+        {
+          $("#postButton").click(function()
+          {
+              $.post("http://localhost:5000/users/postdetails",
+              {
+                  Name:$("#Name").val(),
+                  Empid:$("#Empid").val(),
+                  Batch_No:$("#Batch_No").val(),
+                  Sql_Marks:$("#Sql_Marks").val(),
+                  Unix_Marks:$("#Unix_Marks").val(),
+                  Java_Marks:$("#Java_Marks").val(),
+                  Web_Marks:$("#Web_Marks").val()
+                  
+                  
+              },function(data,status)
+              {
+                  alert(status);
+                  
+              });
+          }); -->
+          
+          $("#viewDetails").click(function(){
+                     $.get("http://localhost:5000/users/getdetails",function(data,status){
+                     
+                     $("tbody").empty();
+                      data.forEach(function(dt){
+            
+                          
+                          var total=parseInt(dt.Web_Marks)+parseInt(dt.Unix_Marks)+parseInt(dt.Sql_Marks)+parseInt(dt.Java_Marks);
+                          $("tbody").append("<tr>"+
+                            "<td>"+dt.Name+"</td>"+
+                            "<td>"+dt.Empid +"</td>"+
+                            "<td>"+dt.Batch_No +"</td>"+
+                            "<td>"+dt.Sql_Marks +"</td>"+
+                            "<td>"+dt.Unix_Marks +"</td>"+
+                            "<td>"+dt.Java_Marks +"</td>"+
+                            "<td>"+dt.Web_Marks +"</td>"+
+                            "<td>"+total +"</td>"+
+            
+                            +"</tr>"
+                            );
+            
+                      });
+                            $("#pid1").empty();
+                         $('#myTable').DataTable();
+                     });
+                    }); 
+
+                    
+          $("#getFeedbackButton").click(function(){
+                $.get("http://localhost:5000/users/getFeedback",function(data,status){
+                
+                    $("#pid1").empty();
+
+                   
+                 data.forEach(function(fd){
+                     console.log('Inside finding feedback');
+                     $("#pid1").append("<tr>"+
+                       "<td>"+fd.Name+"</td>"+
+                       "<td>"+fd.Empid+"</td>"+
+                       "<td>"+fd.BC_ID+"</td>"+
+                       "<td>"+fd.Feedback+"</td >"+       
+                       +"</tr>"
+                       );
+       
+                 });
+                 $('#feedbackTable').DataTable();
+                });
+           });
+        });
+        </script>  
+        
+       
+    <form  method="POST" action="/users/postdetails?_method=POST class="form-signin">
+       
+  <input type="text" id="Name" class="form-control" placeholder="Enter Name" required autofocus>
+  <br>
+
+  <input type="text"  id="Empid" class="form-control" placeholder="Enter Emp-ID" required>
+  <br>
+  <input type="text"  id="Batch_No" class="form-control" placeholder="Enter Batch_No" required>
+  <br>
+  <input type="text"  id="Sql_Marks" class="form-control" placeholder="Enter Sql_Marks" required>
+  <br>
+  <input type="text"  id="Unix_Marks" class="form-control" placeholder="Enter Unix_Marks" required>
+  <br>
+  <input type="text"  id="Web_Marks" class="form-control" placeholder="Enter Web_Marks" required>
+  <br>
+  <input type="text"  id="Java_Marks" class="form-control" placeholder="Enter Java_Marks" required>
+  <br>
+  <button class="btn btn-lg btn-primary btn-block" id="postButton" type="submit">Add Trainee Marks</button>
+  <button class="btn btn-lg btn-primary btn-block" id="viewDetails" >View Trainees</button>
+  <button  class="btn btn-lg btn-primary btn-block" id="getFeedbackButton" >View Feedbacks</button>   
+      
+  
+
+</form>
+
+
+<br>
+<br><br>
+<br>
+
+        <table id="myTable" class="table table-bordered display">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Empid</th>
+                        <th>Batch_No</th>
+                        <th>Sql_Marks</th>
+                        <th>Unix_Marks</th>
+                        <th>Java_Marks</th>
+                        <th>Web_Marks</th>
+                        <th>Total_Marks</th>
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>    
+
+       
+
+
+<table id="feedbackTable" class="table table-bordered display">
+
+   <thead>
+       <tr>
+           <th>Name</th>
+           <th>Empid</th>
+           <th>BC_ID</th>
+           <th>Feedback</th> 
+          
+
+       </tr> 
+   </thead>
+   <tbody id="pid1">
+
+   </tbody>
+</table>
+
+
+        
+        
+                      
